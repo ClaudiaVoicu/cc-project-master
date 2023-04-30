@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import MainPage from "@/js/components/MainPage";
+import InsertPage from "@/js/components/InsertPage";
 export default function Home() {
   return (
-    <MainPage/>
+    <InsertPage/>
 )
 }

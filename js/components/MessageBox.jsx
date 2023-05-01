@@ -16,7 +16,7 @@ function MessageBox(props) {
 			<ul className={'divide-y divide-gray-200'}>
 				<li className={ 'py-3' }>
 							<span className={ `block text-green-800 font-bold` }>
-								ChatGPT:
+								ChatGPT Advisor:
 							</span>
 					<span className={ 'block' }>
 								Hi, I am a ChatBot. How can I help you?

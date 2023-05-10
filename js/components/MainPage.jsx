@@ -1,6 +1,6 @@
 // js/components/MainPage.jsx
 import {useEffect, useState} from "react";
-
+import Link from 'next/link';
 export default function MainPage() {
 	const [records, setRecords] = useState([]);
 
@@ -40,6 +40,26 @@ export default function MainPage() {
 				<h1 className="text-center text-6xl font-bold text-white tracking-wide mb-10">
 					Financial Family Records
 				</h1>
+				<div className="flex justify-center mt-8">
+                    <Link href="/insert">
+                        <button
+                            type="button"
+                            className="focus:outline-none text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                        >
+                            Insert Record
+                        </button>
+                    </Link>
+                </div>
+				<div className="flex justify-center mt-8">
+                    <Link href="/insert">
+                        <button
+                            type="button"
+                            className="focus:outline-none text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                        >
+                            Access Chat
+                        </button>
+                    </Link>
+				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{records.map(record => (
 						<div key={record._id}

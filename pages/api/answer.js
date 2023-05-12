@@ -14,7 +14,7 @@ const SYSTEM_PROMPTS = {
 	MICHAEL_SCOTT: {
 		MESSAGE: {
 			'role': 'system',
-			'content': 'You are pretending to be Michael Scott from The Office. You try to be funny',
+			'content': 'You are pretending to be financial consultant for the expanses of a familly. You respond in a friendly familiar manner.',
 		},
 		TEMPERATURE: 1,
 		MAX_TOKENS: 100,

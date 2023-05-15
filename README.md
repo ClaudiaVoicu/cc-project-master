@@ -1,38 +1,103 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Voicu Maria-Claudia
 
-## Getting Started
+Link video: https://youtu.be/_OPH0NeCjsE
 
-First, run the development server:
+Link publicare: https://github.com/ClaudiaVoicu/cc-project-master
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Link deploy: cc-project-master-178v.vercel.app
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Documentația proiectului Financial Family Records
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Introducere
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Aplicatia Financial Family Records are ca scop expunerea cheltuielilor familiale furnizand informatii despre nume, suma cheltuita, valuta, categoria in care se incadreaza cheltuiala si descrierea ei pentru a oferi utilizatorilor o perspectivă clară și cuprinzătoare asupra lor.
+Doua dintre elementele cheie ale acestei aplicații sunt utilizarea tehnologiilor cloud pentru a asigura fiabilitatea, avand acces rapid si usor la informatiile dorite si integrarea unui API furnizat de OpenAI . Acest API permite aplicației noastre să funcționeze ca un consultant virtual, capabil să răspundă la întrebările utilizatorilor.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Descriere problemă
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Aplicația Financial Family Records are ca scop furnizarea unei platforme pentru gestionarea informațiilor financiare, care să permită utilizatorilor să adauge detalii despre cheltuieli într-o bază de date și să le monitorizeze, astfel menținând evidența acestora.
+De asemenea, există o componentă de chat ce poate oferi utilizatorului recomandări financiare, ajutându-l să facă alegeri în funcție de nevoile și preferințele sale prin expunerea sa ca si consultant financiar virtual.
+Descriere API
+API-ul utilizat în partea de backend este un API simplu, care oferă funcționalități pentru a obține (GET), a adăuga (POST) și a șterge (DELETE) informații într-o bază de date NOSQL.
+Flux de date
+Utilizatorul accesează pagina de introducere a cheltuielilor, unde adaugă informațiile necesare despre cheltuială (numele utilizatorului, sumă, valută, categorie, descriere) și salvează datele în baza de date. După salvare, cheltuielile sunt afișate în pagina principală. Pe această pagină, utilizatorul poate vizualiza sau șterge cheltuielile.
+În plus, componenta de chat oferă posibilitatea de a discuta cu un ChatBot antrenat să ofere recomandări financiare asemenea unui consultant virtual.
 
-## Learn More
+Exemple de Request/Response, metode HTTP și autorizare servicii
 
-To learn more about Next.js, take a look at the following resources:
+În cadrul componentei de Chat se folosește un API Call către OpenAI, unde este specificat ce fel de răspunsuri dorim să primim. Configurarea este următoarea:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+     MESSAGE: {
+            'role': 'system',
+            'content': 'You are pretending to be financial consultant for the expanses of a family. You respond in a friendly familiar manner.',
+        },
+        TEMPERATURE: 1,
+        MAX_TOKENS: 100,
+     
+Pentru utilizarea acestui serviciu am folosit OPENAI API KEY oferit de OpenAI pe care am stocat-o in fișierul .env din cadrul proiect.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+import { Configuration, OpenAIApi , } from 'openai';
 
-## Deploy on Vercel
+if (!process.env.OPENAI_API_KEY) {
+    throw new Error('Please add your OPENAI_API_KEY to .env');
+}
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+export const openai = new OpenAIApi(configuration);
+Răspunsul primit de la API-ul OpenAI este mai apoi afișat utilizatorului în componenta chat a aplicatiei.
+
+Exemplu de request POST către backend (Metoda HTTP de tipul POST)
+
+Pentru a trimite date catre back-end: 
+
+fetch("/api/records", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }).then(() => {
+                console.log("New record inserted");
+                document.getElementById("userName").value = "";
+                document.getElementById("amount").value = "";
+                document.getElementById("currency").value = "";
+                document.getElementById("category").value = "";
+                document.getElementById("description").value = "";
+            });
+						
+Functia POST din cadrul serverului arata astfel:
+
+else if(req.method === 'POST') {
+        const record = req.body;
+        const result = await postRecord(record);
+        return sendOk(res, result);
+    }
+
+Descriere tehnologii cloud folosite
+
+Pentru dezvoltarea proiectului, s-au utilizat următoarele tehnologii Cloud:
+-	Next.js - un framework React pentru crearea de aplicații web și mobile.
+-	MongoDB - o bază de date NoSQL cu scalabilitate orizontală și verticală.
+-	OpenAI API- un API care furnizează instrumente de inteligență artificială pentru dezvoltatori.
+-	Vercel - o platformă de cloud care oferă funcționalități de deploy și hosting pentru aplicații web.
+
+Detalii despre aplicație
+
+Aplicația Financial Family Records este un serviciu de tip SaaS (Software as a Service) care oferă utilizatorilor posibilitatea de a gestiona și monitoriza cheltuielile lor.
+Această aplicație satisface nevoia utilizatorilor de a avea o sursă centralizată de informații financiare și de a le gestiona într-un mod personalizat. Utilizatorii pot adăuga detalii despre cheltuieli într-o bază de date, precum numele utilizatorului, suma, valuta, categoria și descrierea.
+Prin utilizarea tehnologiilor cloud, aplicația asigură scalabilitate și oferă o experiență fiabilă și ușor de utilizat pentru utilizatori.
+Pagina principală a aplicației conține o listă cu toate cheltuielile introduse de utilizatori, care pot fi vizualizate și șterse. Aceasta oferă o modalitate simplă și eficientă de a gestiona cheltuielile generate de utilizatori aplicației. 
+De asemenea, cu ajutorul ChatBot-ului integrat in pagina de chat a aplicatiei, utilizatorul poate primi recomandări financiare detaliate, pe baza cărora poate lua decizii informate în gestionarea cheltuielilor sale.
+
+![image](https://github.com/ClaudiaVoicu/cc-project-master/assets/91604317/ff093d20-8984-4444-9807-b2b7d5b17053)
+
+![image](https://github.com/ClaudiaVoicu/cc-project-master/assets/91604317/6e91a0fd-4477-4b12-bc8b-11f0c707adf6)
+
+![image](https://github.com/ClaudiaVoicu/cc-project-master/assets/91604317/105e7ac2-5682-441d-854e-09c5a3985efe)
+
+ 
+ 
+
